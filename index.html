@@ -220,6 +220,290 @@
         padding: 2rem 1.5rem;
       }
     }
+
+    /* ==========================================
+       7ORVIX PING PONG GAME MODAL STYLES
+       ========================================== */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .pong-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.45rem 1.15rem;
+      background: rgba(255, 51, 1, 0.1);
+      border: 1px solid rgba(255, 51, 1, 0.35);
+      border-radius: 100px;
+      color: var(--ink);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 0 15px rgba(255, 51, 1, 0.15);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      outline: none;
+    }
+
+    .pong-btn:hover {
+      background: var(--brand);
+      border-color: var(--brand-hover);
+      color: #FFFFFF;
+      box-shadow: 0 0 25px rgba(255, 51, 1, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .pong-btn svg {
+      transition: transform 0.3s ease;
+    }
+
+    .pong-btn:hover svg {
+      transform: scale(1.15) rotate(-5deg);
+    }
+
+    /* PONG MODAL BACKDROP */
+    .pong-modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(8, 9, 9, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 1.5rem;
+    }
+
+    .pong-modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* PONG MODAL CARD */
+    .pong-modal-card {
+      position: relative;
+      width: 100%;
+      max-width: 840px;
+      background: rgba(14, 15, 18, 0.96);
+      border: 1px solid var(--hairline);
+      border-radius: 20px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9), 0 0 50px rgba(255, 51, 1, 0.18);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.94) translateY(12px);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .pong-modal-backdrop.active .pong-modal-card {
+      transform: scale(1) translateY(0);
+    }
+
+    /* MODAL HEADER */
+    .pong-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 1.6rem;
+      border-bottom: 1px solid var(--hairline);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .pong-title {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .pong-header-logo {
+      height: 18px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 1px 6px rgba(255, 51, 1, 0.3));
+    }
+
+    .pong-title-tag {
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--ink-muted);
+    }
+
+    .pong-close-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--hairline);
+      color: var(--ink-muted);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      line-height: 1;
+    }
+
+    .pong-close-btn:hover {
+      background: var(--brand);
+      color: #FFF;
+      border-color: var(--brand);
+      transform: scale(1.05);
+    }
+
+    /* GAME CONTAINER & CANVAS */
+    .pong-game-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 480px;
+      background: #090A0D;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #pong-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: none;
+    }
+
+    /* PONG OVERLAY SCREEN */
+    .pong-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(9, 10, 13, 0.88);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: opacity 0.3s ease;
+      z-index: 10;
+    }
+
+    .pong-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .pong-overlay-content {
+      padding: 2rem;
+      max-width: 480px;
+    }
+
+    .pong-overlay-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .pong-overlay-logo {
+      height: 36px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 0 20px rgba(255, 51, 1, 0.45));
+    }
+
+    .pong-overlay-content h2 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+    }
+
+    .pong-overlay-content p {
+      font-size: 0.88rem;
+      color: var(--ink-muted);
+      margin-bottom: 1.8rem;
+      line-height: 1.5;
+    }
+
+    .pong-primary-btn {
+      padding: 0.75rem 2.2rem;
+      background: var(--brand);
+      border: none;
+      border-radius: 100px;
+      color: #FFF;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(255, 51, 1, 0.5);
+      transition: all 0.25s ease;
+    }
+
+    .pong-primary-btn:hover {
+      background: var(--brand-hover);
+      transform: scale(1.04);
+      box-shadow: 0 0 35px rgba(255, 51, 1, 0.7);
+    }
+
+    /* MODAL FOOTER */
+    .pong-modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.6rem;
+      border-top: 1px solid var(--hairline);
+      background: rgba(255, 255, 255, 0.02);
+      font-size: 0.72rem;
+      color: var(--ink-subtle);
+      font-family: var(--font-display);
+      letter-spacing: 0.05em;
+    }
+
+    .pong-controls-info {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+    }
+
+    .pong-controls-info kbd {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      padding: 0.15rem 0.4rem;
+      color: var(--ink-muted);
+      font-family: monospace;
+      font-size: 0.7rem;
+    }
+
+    .pong-sound-toggle {
+      cursor: pointer;
+      color: var(--ink-muted);
+      transition: color 0.2s ease;
+      user-select: none;
+    }
+
+    .pong-sound-toggle:hover {
+      color: var(--brand);
+    }
   </style>
 </head>
 
@@ -267,9 +551,20 @@
           <path fill-rule="evenodd" clip-rule="evenodd" d="M371.171 44.8C371.427 45.056 371.512 45.312 371.427 45.568C371.342 45.824 371.107 45.952 370.723 45.952H355.619L355.299 45.824H355.235L337.187 30.016C336.206 29.1627 335.246 28.6507 334.307 28.48C333.368 28.2667 332.238 28.16 330.915 28.16C330.062 28.16 329.208 28.3307 328.355 28.672C327.502 28.9707 326.755 29.4187 326.115 30.016L308.067 45.824H308.003L307.683 45.952H292.515C292.131 45.952 291.896 45.824 291.811 45.568C291.726 45.312 291.811 45.056 292.067 44.8L317.475 22.592L293.283 1.408C293.027 1.152 292.942 0.895999 293.027 0.639999C293.112 0.383998 293.347 0.255997 293.731 0.255997H307.235L307.555 0.383999H307.619L325.667 16.192C326.222 16.704 326.755 17.088 327.267 17.344C327.779 17.6 328.312 17.7707 328.867 17.856C329.166 17.9413 329.443 17.984 329.699 17.984C329.998 17.984 330.318 18.0053 330.659 18.048H332.771C333.624 18.048 334.478 17.8987 335.331 17.6C336.184 17.2587 336.931 16.7893 337.571 16.192L355.619 0.383999H355.683L356.003 0.255997H369.571C369.955 0.255997 370.19 0.383998 370.275 0.639999C370.36 0.895999 370.275 1.152 370.019 1.408L345.763 22.592C349.987 26.3893 354.211 30.1227 358.435 33.792C362.659 37.4187 366.904 41.088 371.171 44.8Z" fill="#F0F2F5"/>
         </svg>
       </a>
-      <div class="status-pill">
-        <span class="status-dot"></span>
-        <span class="status-text">COMING SOON</span>
+      <div class="header-actions">
+        <button id="play-pong-btn" class="pong-btn" aria-label="Play Ping Pong Game">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="6" width="20" height="12" rx="2" />
+            <path d="M6 12h4m-2-2v4" />
+            <circle cx="15" cy="11" r="1.2" fill="currentColor" />
+            <circle cx="18" cy="13" r="1.2" fill="currentColor" />
+          </svg>
+          PLAY PING PONG
+        </button>
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <span class="status-text">COMING SOON</span>
+        </div>
       </div>
     </header>
 
@@ -533,6 +828,521 @@
         floatingLogo.style.transform = `translate3d(0px, 0px, 0px)`;
       } else {
         requestAnimationFrame(updatePhysics);
+      }
+
+    })();
+  </script>
+
+  <!-- PING PONG GAME MODAL -->
+  <div class="pong-modal-backdrop" id="pong-modal" role="dialog" aria-modal="true" aria-label="7ORVIX Ping Pong Game">
+    <div class="pong-modal-card">
+      <div class="pong-modal-header">
+        <div class="pong-title">
+          <svg class="pong-header-logo" viewBox="0 0 372 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M53.632 10.368C53.632 12.7573 52.864 14.8907 51.328 16.768L27.264 45.632C27.2213 45.6747 27.136 45.7173 27.008 45.76C26.88 45.8453 26.7947 45.888 26.752 45.888H13.76C13.4187 45.888 13.184 45.7813 13.056 45.568C12.9707 45.3547 13.0347 45.12 13.248 44.864L42.048 10.432H0.64C0.213333 10.432 0 10.2187 0 9.792V0.896C0 0.469331 0.213333 0.255997 0.64 0.255997H43.52C44.928 0.255997 46.2507 0.53333 47.488 1.088C48.7253 1.6 49.792 2.304 50.688 3.2C51.584 4.096 52.288 5.16267 52.8 6.4C53.3547 7.63733 53.632 8.96 53.632 10.368Z" fill="url(#brand-grad)"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M126.683 22.848C126.683 26.0907 126.064 29.12 124.827 31.936C123.589 34.7093 121.904 37.12 119.771 39.168C117.637 41.216 115.141 42.816 112.283 43.968C109.467 45.12 106.459 45.696 103.258 45.696H80.9865C77.7865 45.696 74.7572 45.12 71.8985 43.968C69.0825 42.816 66.6078 41.216 64.4745 39.168C62.3412 37.12 60.6558 34.7093 59.4185 31.936C58.1812 29.12 57.5625 26.0907 57.5625 22.848C57.5625 19.5627 58.1812 16.5333 59.4185 13.76C60.6558 10.9867 62.3198 8.576 64.4105 6.528C66.5438 4.48 69.0398 2.88 71.8985 1.728C74.7572 0.575999 77.7865 0 80.9865 0H103.258C106.459 0 109.488 0.575999 112.347 1.728C115.205 2.88 117.68 4.48 119.771 6.528C121.904 8.576 123.589 10.9867 124.827 13.76C126.064 16.5333 126.683 19.5627 126.683 22.848ZM80.9865 36.16C79.2798 36.16 77.6798 35.8187 76.1865 35.136C74.6932 34.4533 73.3918 33.536 72.2825 32.384C71.1732 31.1893 70.2985 29.7813 69.6585 28.16C69.0185 26.5387 68.6985 24.768 68.6985 22.848C68.6985 20.928 69.0185 19.1573 69.6585 17.536C70.2985 15.872 71.1732 14.464 72.2825 13.312C73.3918 12.1173 74.6932 11.1787 76.1865 10.496C77.6798 9.81333 79.2798 9.472 80.9865 9.472H103.258C104.965 9.472 106.565 9.81333 108.059 10.496C109.552 11.1787 110.853 12.1173 111.963 13.312C113.072 14.464 113.947 15.872 114.587 17.536C115.227 19.1573 115.547 20.928 115.547 22.848C115.547 24.768 115.227 26.5387 114.587 28.16C113.947 29.7813 113.072 31.1893 111.963 32.384C110.853 33.536 109.552 34.4533 108.059 35.136C106.565 35.8187 104.965 36.16 103.258 36.16H80.9865Z" fill="#F0F2F5"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M192.836 17.664C192.836 19.6267 192.537 21.504 191.94 23.296C191.385 25.0453 190.575 26.6453 189.508 28.096C188.441 29.504 187.14 30.7413 185.604 31.808C184.111 32.8747 182.447 33.6853 180.612 34.24L192.58 44.736C192.836 44.992 192.921 45.248 192.836 45.504C192.751 45.76 192.516 45.888 192.132 45.888H176.964L176.644 45.76H176.58L166.596 36.992C165.231 35.7547 163.652 35.136 161.86 35.136H141.7V45.312C141.7 45.7387 141.487 45.952 141.06 45.952H131.14C130.713 45.952 130.5 45.7387 130.5 45.312V35.584C130.5 34.0907 130.777 32.704 131.332 31.424C131.887 30.144 132.633 29.0347 133.572 28.096C134.511 27.1573 135.62 26.4107 136.9 25.856C138.223 25.3013 139.609 25.024 141.06 25.024H174.02C176.196 25.024 177.924 24.3413 179.204 22.976C180.527 21.6107 181.188 19.8613 181.188 17.728C181.188 15.552 180.527 13.7813 179.204 12.416C177.924 11.008 176.196 10.304 174.02 10.304H132.036C131.609 10.304 131.396 10.0907 131.396 9.664V0.831997C131.396 0.405331 131.609 0.191998 132.036 0.191998H174.02C176.58 0.191998 178.991 0.597331 181.252 1.408C183.556 2.21866 185.561 3.37066 187.268 4.864C188.975 6.35733 190.319 8.192 191.3 10.368C192.324 12.544 192.836 14.976 192.836 17.664Z" fill="#F0F2F5"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M256.171 0.255997C256.854 0.255997 257.046 0.554663 256.747 1.152L239.723 39.296C238.827 41.3013 237.44 42.9227 235.563 44.16C233.686 45.3547 231.659 45.952 229.483 45.952H220.203C218.027 45.952 216 45.3547 214.123 44.16C212.246 42.9227 210.859 41.3013 209.963 39.296L192.939 1.152C192.64 0.554663 192.832 0.255997 193.515 0.255997H203.243C203.328 0.255997 203.435 0.298664 203.563 0.383999C203.691 0.469331 203.776 0.554665 203.819 0.639999L218.987 34.624C219.158 34.9653 219.414 35.2427 219.755 35.456C220.096 35.6693 220.459 35.776 220.843 35.776H228.843C229.782 35.776 230.4 35.392 230.699 34.624L245.867 0.639999C245.91 0.554665 245.995 0.469331 246.123 0.383999C246.251 0.298664 246.358 0.255997 246.443 0.255997H256.171Z" fill="#F0F2F5"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M287.377 0.255997C287.804 0.255997 288.017 0.469331 288.017 0.896V9.792C288.017 10.2187 287.804 10.432 287.377 10.432H279.953V35.776H287.377C287.804 35.776 288.017 35.9893 288.017 36.416V45.312C288.017 45.7387 287.804 45.952 287.377 45.952H261.265C260.838 45.952 260.625 45.7387 260.625 45.312V36.416C260.625 35.9893 260.838 35.776 261.265 35.776H268.753V10.432H261.265C260.838 10.432 260.625 10.2187 260.625 9.792V0.896C260.625 0.469331 260.838 0.255997 261.265 0.255997H287.377Z" fill="#F0F2F5"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M371.171 44.8C371.427 45.056 371.512 45.312 371.427 45.568C371.342 45.824 371.107 45.952 370.723 45.952H355.619L355.299 45.824H355.235L337.187 30.016C336.206 29.1627 335.246 28.6507 334.307 28.48C333.368 28.2667 332.238 28.16 330.915 28.16C330.062 28.16 329.208 28.3307 328.355 28.672C327.502 28.9707 326.755 29.4187 326.115 30.016L308.067 45.824H308.003L307.683 45.952H292.515C292.131 45.952 291.896 45.824 291.811 45.568C291.726 45.312 291.811 45.056 292.067 44.8L317.475 22.592L293.283 1.408C293.027 1.152 292.942 0.895999 293.027 0.639999C293.112 0.383998 293.347 0.255997 293.731 0.255997H307.235L307.555 0.383999H307.619L325.667 16.192C326.222 16.704 326.755 17.088 327.267 17.344C327.779 17.6 328.312 17.7707 328.867 17.856C329.166 17.9413 329.443 17.984 329.699 17.984C329.998 17.984 330.318 18.0053 330.659 18.048H332.771C333.624 18.048 334.478 17.8987 335.331 17.6C336.184 17.2587 336.931 16.7893 337.571 16.192L355.619 0.383999H355.683L356.003 0.255997H369.571C369.955 0.255997 370.19 0.383998 370.275 0.639999C370.36 0.895999 370.275 1.152 370.019 1.408L345.763 22.592C349.987 26.3893 354.211 30.1227 358.435 33.792C362.659 37.4187 366.904 41.088 371.171 44.8Z" fill="#F0F2F5"/>
+          </svg>
+          <span class="pong-title-tag">PONG</span>
+        </div>
+        <button class="pong-close-btn" id="pong-close-btn" aria-label="Close Game">&times;</button>
+      </div>
+
+      <div class="pong-game-container">
+        <canvas id="pong-canvas" width="800" height="480"></canvas>
+        <div id="pong-overlay" class="pong-overlay">
+          <div class="pong-overlay-content">
+            <div class="pong-overlay-brand">
+              <svg class="pong-overlay-logo" viewBox="0 0 372 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M53.632 10.368C53.632 12.7573 52.864 14.8907 51.328 16.768L27.264 45.632C27.2213 45.6747 27.136 45.7173 27.008 45.76C26.88 45.8453 26.7947 45.888 26.752 45.888H13.76C13.4187 45.888 13.184 45.7813 13.056 45.568C12.9707 45.3547 13.0347 45.12 13.248 44.864L42.048 10.432H0.64C0.213333 10.432 0 10.2187 0 9.792V0.896C0 0.469331 0.213333 0.255997 0.64 0.255997H43.52C44.928 0.255997 46.2507 0.53333 47.488 1.088C48.7253 1.6 49.792 2.304 50.688 3.2C51.584 4.096 52.288 5.16267 52.8 6.4C53.3547 7.63733 53.632 8.96 53.632 10.368Z" fill="url(#brand-grad)"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M126.683 22.848C126.683 26.0907 126.064 29.12 124.827 31.936C123.589 34.7093 121.904 37.12 119.771 39.168C117.637 41.216 115.141 42.816 112.283 43.968C109.467 45.12 106.459 45.696 103.258 45.696H80.9865C77.7865 45.696 74.7572 45.12 71.8985 43.968C69.0825 42.816 66.6078 41.216 64.4745 39.168C62.3412 37.12 60.6558 34.7093 59.4185 31.936C58.1812 29.12 57.5625 26.0907 57.5625 22.848C57.5625 19.5627 58.1812 16.5333 59.4185 13.76C60.6558 10.9867 62.3198 8.576 64.4105 6.528C66.5438 4.48 69.0398 2.88 71.8985 1.728C74.7572 0.575999 77.7865 0 80.9865 0H103.258C106.459 0 109.488 0.575999 112.347 1.728C115.205 2.88 117.68 4.48 119.771 6.528C121.904 8.576 123.589 10.9867 124.827 13.76C126.064 16.5333 126.683 19.5627 126.683 22.848ZM80.9865 36.16C79.2798 36.16 77.6798 35.8187 76.1865 35.136C74.6932 34.4533 73.3918 33.536 72.2825 32.384C71.1732 31.1893 70.2985 29.7813 69.6585 28.16C69.0185 26.5387 68.6985 24.768 68.6985 22.848C68.6985 20.928 69.0185 19.1573 69.6585 17.536C70.2985 15.872 71.1732 14.464 72.2825 13.312C73.3918 12.1173 74.6932 11.1787 76.1865 10.496C77.6798 9.81333 79.2798 9.472 80.9865 9.472H103.258C104.965 9.472 106.565 9.81333 108.059 10.496C109.552 11.1787 110.853 12.1173 111.963 13.312C113.072 14.464 113.947 15.872 114.587 17.536C115.227 19.1573 115.547 20.928 115.547 22.848C115.547 24.768 115.227 26.5387 114.587 28.16C113.947 29.7813 113.072 31.1893 111.963 32.384C110.853 33.536 109.552 34.4533 108.059 35.136C106.565 35.8187 104.965 36.16 103.258 36.16H80.9865Z" fill="#F0F2F5"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M192.836 17.664C192.836 19.6267 192.537 21.504 191.94 23.296C191.385 25.0453 190.575 26.6453 189.508 28.096C188.441 29.504 187.14 30.7413 185.604 31.808C184.111 32.8747 182.447 33.6853 180.612 34.24L192.58 44.736C192.836 44.992 192.921 45.248 192.836 45.504C192.751 45.76 192.516 45.888 192.132 45.888H176.964L176.644 45.76H176.58L166.596 36.992C165.231 35.7547 163.652 35.136 161.86 35.136H141.7V45.312C141.7 45.7387 141.487 45.952 141.06 45.952H131.14C130.713 45.952 130.5 45.7387 130.5 45.312V35.584C130.5 34.0907 130.777 32.704 131.332 31.424C131.887 30.144 132.633 29.0347 133.572 28.096C134.511 27.1573 135.62 26.4107 136.9 25.856C138.223 25.3013 139.609 25.024 141.06 25.024H174.02C176.196 25.024 177.924 24.3413 179.204 22.976C180.527 21.6107 181.188 19.8613 181.188 17.728C181.188 15.552 180.527 13.7813 179.204 12.416C177.924 11.008 176.196 10.304 174.02 10.304H132.036C131.609 10.304 131.396 10.0907 131.396 9.664V0.831997C131.396 0.405331 131.609 0.191998 132.036 0.191998H174.02C176.58 0.191998 178.991 0.597331 181.252 1.408C183.556 2.21866 185.561 3.37066 187.268 4.864C188.975 6.35733 190.319 8.192 191.3 10.368C192.324 12.544 192.836 14.976 192.836 17.664Z" fill="#F0F2F5"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M256.171 0.255997C256.854 0.255997 257.046 0.554663 256.747 1.152L239.723 39.296C238.827 41.3013 237.44 42.9227 235.563 44.16C233.686 45.3547 231.659 45.952 229.483 45.952H220.203C218.027 45.952 216 45.3547 214.123 44.16C212.246 42.9227 210.859 41.3013 209.963 39.296L192.939 1.152C192.64 0.554663 192.832 0.255997 193.515 0.255997H203.243C203.328 0.255997 203.435 0.298664 203.563 0.383999C203.691 0.469331 203.776 0.554665 203.819 0.639999L218.987 34.624C219.158 34.9653 219.414 35.2427 219.755 35.456C220.096 35.6693 220.459 35.776 220.843 35.776H228.843C229.782 35.776 230.4 35.392 230.699 34.624L245.867 0.639999C245.91 0.554665 245.995 0.469331 246.123 0.383999C246.251 0.298664 246.358 0.255997 246.443 0.255997H256.171Z" fill="#F0F2F5"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M287.377 0.255997C287.804 0.255997 288.017 0.469331 288.017 0.896V9.792C288.017 10.2187 287.804 10.432 287.377 10.432H279.953V35.776H287.377C287.804 35.776 288.017 35.9893 288.017 36.416V45.312C288.017 45.7387 287.804 45.952 287.377 45.952H261.265C260.838 45.952 260.625 45.7387 260.625 45.312V36.416C260.625 35.9893 260.838 35.776 261.265 35.776H268.753V10.432H261.265C260.838 10.432 260.625 10.2187 260.625 9.792V0.896C260.625 0.469331 260.838 0.255997 261.265 0.255997H287.377Z" fill="#F0F2F5"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M371.171 44.8C371.427 45.056 371.512 45.312 371.427 45.568C371.342 45.824 371.107 45.952 370.723 45.952H355.619L355.299 45.824H355.235L337.187 30.016C336.206 29.1627 335.246 28.6507 334.307 28.48C333.368 28.2667 332.238 28.16 330.915 28.16C330.062 28.16 329.208 28.3307 328.355 28.672C327.502 28.9707 326.755 29.4187 326.115 30.016L308.067 45.824H308.003L307.683 45.952H292.515C292.131 45.952 291.896 45.824 291.811 45.568C291.726 45.312 291.811 45.056 292.067 44.8L317.475 22.592L293.283 1.408C293.027 1.152 292.942 0.895999 293.027 0.639999C293.112 0.383998 293.347 0.255997 293.731 0.255997H307.235L307.555 0.383999H307.619L325.667 16.192C326.222 16.704 326.755 17.088 327.267 17.344C327.779 17.6 328.312 17.7707 328.867 17.856C329.166 17.9413 329.443 17.984 329.699 17.984C329.998 17.984 330.318 18.0053 330.659 18.048H332.771C333.624 18.048 334.478 17.8987 335.331 17.6C336.184 17.2587 336.931 16.7893 337.571 16.192L355.619 0.383999H355.683L356.003 0.255997H369.571C369.955 0.255997 370.19 0.383998 370.275 0.639999C370.36 0.895999 370.275 1.152 370.019 1.408L345.763 22.592C349.987 26.3893 354.211 30.1227 358.435 33.792C362.659 37.4187 366.904 41.088 371.171 44.8Z" fill="#F0F2F5"/>
+              </svg>
+            </div>
+            <h2 id="pong-overlay-title">CYBER PONG</h2>
+            <p id="pong-overlay-subtitle">First player to 7 points wins. Move mouse or use W/S keys.</p>
+            <button id="pong-start-btn" class="pong-primary-btn">START GAME</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pong-modal-footer">
+        <div class="pong-controls-info">
+          <span><kbd>W</kbd> / <kbd>S</kbd> or <kbd>▲</kbd> / <kbd>▼</kbd> or Mouse to Move</span>
+          <span><kbd>ESC</kbd> to Exit</span>
+        </div>
+        <div class="pong-sound-toggle" id="pong-sound-toggle">
+          <span id="sound-status">SOUND: ON</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PING PONG GAME LOGIC -->
+  <script>
+    (function() {
+      'use strict';
+
+      const playBtn = document.getElementById('play-pong-btn');
+      const modal = document.getElementById('pong-modal');
+      const closeBtn = document.getElementById('pong-close-btn');
+      const canvas = document.getElementById('pong-canvas');
+      const ctx = canvas.getContext('2d');
+      const overlay = document.getElementById('pong-overlay');
+      const overlayTitle = document.getElementById('pong-overlay-title');
+      const overlaySubtitle = document.getElementById('pong-overlay-subtitle');
+      const startBtn = document.getElementById('pong-start-btn');
+      const soundToggle = document.getElementById('pong-sound-toggle');
+      const soundStatus = document.getElementById('sound-status');
+
+      let audioEnabled = true;
+
+      // Audio elements using files from landing_assets/Sounds
+      const bgMusic = new Audio('landing_assets/Sounds/bg_music.mp3');
+      bgMusic.loop = true;
+      bgMusic.volume = 0.35;
+
+      const ballHitAudio = new Audio('landing_assets/Sounds/ball_hit.mp3');
+      const ballDieAudio = new Audio('landing_assets/Sounds/ball_die.mp3');
+
+      function playSound(type) {
+        if (!audioEnabled) return;
+        try {
+          if (type === 'paddle') {
+            const hitSound = ballHitAudio.cloneNode();
+            hitSound.volume = 0.7;
+            hitSound.play().catch(() => {});
+          } else if (type === 'score' || type === 'die') {
+            const dieSound = ballDieAudio.cloneNode();
+            dieSound.volume = 0.85;
+            dieSound.play().catch(() => {});
+          } else if (type === 'wall') {
+            const wallSound = ballHitAudio.cloneNode();
+            wallSound.volume = 0.35;
+            wallSound.play().catch(() => {});
+          } else if (type === 'win') {
+            const winSound = ballDieAudio.cloneNode();
+            winSound.volume = 1.0;
+            winSound.play().catch(() => {});
+          }
+        } catch (e) {
+          // Ignore audio errors
+        }
+      }
+
+      function startBgMusic() {
+        if (audioEnabled && modal.classList.contains('active')) {
+          bgMusic.play().catch(() => {});
+        }
+      }
+
+      function stopBgMusic() {
+        bgMusic.pause();
+        bgMusic.currentTime = 0;
+      }
+
+      if (soundToggle && soundStatus) {
+        soundToggle.addEventListener('click', () => {
+          audioEnabled = !audioEnabled;
+          soundStatus.textContent = `SOUND: ${audioEnabled ? 'ON' : 'OFF'}`;
+          if (!audioEnabled) {
+            bgMusic.pause();
+          } else if (modal.classList.contains('active')) {
+            startBgMusic();
+          }
+        });
+      }
+
+      const CANVAS_WIDTH = 800;
+      const CANVAS_HEIGHT = 480;
+      const WINNING_SCORE = 7;
+
+      const paddleHeight = 85;
+      const paddleWidth = 12;
+
+      let player = {
+        x: 25,
+        y: CANVAS_HEIGHT / 2 - paddleHeight / 2,
+        width: paddleWidth,
+        height: paddleHeight,
+        score: 0
+      };
+
+      let ai = {
+        x: CANVAS_WIDTH - 25 - paddleWidth,
+        y: CANVAS_HEIGHT / 2 - paddleHeight / 2,
+        width: paddleWidth,
+        height: paddleHeight,
+        score: 0,
+        speed: 5.2
+      };
+
+      let ball = {
+        x: CANVAS_WIDTH / 2,
+        y: CANVAS_HEIGHT / 2,
+        radius: 7,
+        speed: 6.5,
+        vx: 5,
+        vy: 3,
+        trail: []
+      };
+
+      let particles = [];
+      let isPlaying = false;
+      let isPaused = false;
+      let animId = null;
+
+      function spawnParticles(x, y, color, count = 12) {
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 1 + Math.random() * 4;
+          particles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            radius: 1.5 + Math.random() * 2,
+            life: 1,
+            decay: 0.03 + Math.random() * 0.03,
+            color: color
+          });
+        }
+      }
+
+      function resetBall(direction = 1) {
+        ball.x = CANVAS_WIDTH / 2;
+        ball.y = CANVAS_HEIGHT / 2;
+        ball.speed = 8.5;
+        const angle = (Math.random() * 0.6 - 0.3);
+        ball.vx = Math.cos(angle) * ball.speed * direction;
+        ball.vy = Math.sin(angle) * ball.speed;
+        ball.trail = [];
+      }
+
+      function resetGame() {
+        player.score = 0;
+        ai.score = 0;
+        player.y = CANVAS_HEIGHT / 2 - paddleHeight / 2;
+        ai.y = CANVAS_HEIGHT / 2 - paddleHeight / 2;
+        resetBall(Math.random() > 0.5 ? 1 : -1);
+      }
+
+      let keys = {};
+
+      window.addEventListener('keydown', (e) => {
+        keys[e.key] = true;
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          closeModal();
+        }
+        if (e.key === ' ' && modal.classList.contains('active') && overlay.classList.contains('hidden')) {
+          isPaused = !isPaused;
+        }
+      });
+
+      window.addEventListener('keyup', (e) => {
+        keys[e.key] = false;
+      });
+
+      canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const scaleY = CANVAS_HEIGHT / rect.height;
+        const mouseY = (e.clientY - rect.top) * scaleY;
+        player.y = Math.max(10, Math.min(CANVAS_HEIGHT - player.height - 10, mouseY - player.height / 2));
+      });
+
+      canvas.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+          const rect = canvas.getBoundingClientRect();
+          const scaleY = CANVAS_HEIGHT / rect.height;
+          const touchY = (e.touches[0].clientY - rect.top) * scaleY;
+          player.y = Math.max(10, Math.min(CANVAS_HEIGHT - player.height - 10, touchY - player.height / 2));
+        }
+        e.preventDefault();
+      }, { passive: false });
+
+      function update() {
+        if (!isPlaying || isPaused) return;
+
+        const K_SPEED = 7;
+        if (keys['w'] || keys['W'] || keys['ArrowUp']) {
+          player.y = Math.max(10, player.y - K_SPEED);
+        }
+        if (keys['s'] || keys['S'] || keys['ArrowDown']) {
+          player.y = Math.min(CANVAS_HEIGHT - player.height - 10, player.y + K_SPEED);
+        }
+
+        // ADVANCED AI LOGIC: Predictive Trajectory + Dynamic Speed + Deceptive Feints
+        const aiCenter = ai.y + ai.height / 2;
+        let targetY = CANVAS_HEIGHT / 2;
+
+        if (ball.vx > 0) {
+          // Ball is coming towards AI: Predict intercept point accounting for wall reflections
+          let simX = ball.x;
+          let simY = ball.y;
+          let simVx = ball.vx;
+          let simVy = ball.vy;
+
+          while (simX < ai.x) {
+            simX += simVx;
+            simY += simVy;
+            if (simY <= 7 || simY >= CANVAS_HEIGHT - 7) {
+              simVy = -simVy;
+            }
+          }
+          targetY = simY;
+        } else {
+          // Ball is moving away: Cyber feint / jitter maneuver to confuse the user
+          const feintOffset = Math.sin(Date.now() * 0.016) * 38;
+          targetY = (CANVAS_HEIGHT / 2) + feintOffset;
+        }
+
+        // Fast responsive AI speed scaling up to 1.3x ball speed
+        const dynamicAiSpeed = Math.max(9.5, Math.abs(ball.vx) * 1.3);
+        if (Math.abs(aiCenter - targetY) > 3) {
+          if (aiCenter < targetY) {
+            ai.y += Math.min(dynamicAiSpeed, targetY - aiCenter);
+          } else {
+            ai.y -= Math.min(dynamicAiSpeed, aiCenter - targetY);
+          }
+        }
+        ai.y = Math.max(10, Math.min(CANVAS_HEIGHT - ai.height - 10, ai.y));
+
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+
+        ball.trail.push({ x: ball.x, y: ball.y });
+        if (ball.trail.length > 8) ball.trail.shift();
+
+        if (ball.y - ball.radius <= 0) {
+          ball.y = ball.radius;
+          ball.vy = -ball.vy;
+          playSound('wall');
+          spawnParticles(ball.x, ball.y, '#F0F2F5', 6);
+        } else if (ball.y + ball.radius >= CANVAS_HEIGHT) {
+          ball.y = CANVAS_HEIGHT - ball.radius;
+          ball.vy = -ball.vy;
+          playSound('wall');
+          spawnParticles(ball.x, ball.y, '#F0F2F5', 6);
+        }
+
+        if (
+          ball.x - ball.radius <= player.x + player.width &&
+          ball.x + ball.radius >= player.x &&
+          ball.y >= player.y &&
+          ball.y <= player.y + player.height
+        ) {
+          ball.x = player.x + player.width + ball.radius;
+          const collidePoint = ball.y - (player.y + player.height / 2);
+          const normalizedCollide = collidePoint / (player.height / 2);
+          const bounceAngle = normalizedCollide * (Math.PI / 3);
+
+          ball.speed = Math.min(ball.speed + 0.55, 17);
+          ball.vx = Math.cos(bounceAngle) * ball.speed;
+          ball.vy = Math.sin(bounceAngle) * ball.speed;
+
+          playSound('paddle');
+          spawnParticles(ball.x, ball.y, '#FF3301', 12);
+        }
+
+        if (
+          ball.x + ball.radius >= ai.x &&
+          ball.x - ball.radius <= ai.x + ai.width &&
+          ball.y >= ai.y &&
+          ball.y <= ai.y + ai.height
+        ) {
+          ball.x = ai.x - ball.radius;
+
+          // AI counter-attacks targeting opposite corner of player position to catch user off-guard
+          const playerCenter = player.y + player.height / 2;
+          const attackDirection = playerCenter < CANVAS_HEIGHT / 2 ? 1 : -1;
+          const attackAngle = (Math.random() * 0.3 + 0.4) * attackDirection;
+
+          ball.speed = Math.min(ball.speed + 0.65, 17.5);
+          ball.vx = -Math.cos(attackAngle) * ball.speed;
+          ball.vy = Math.sin(attackAngle) * ball.speed;
+
+          playSound('paddle');
+          spawnParticles(ball.x, ball.y, '#FF3301', 16);
+        }
+
+        if (ball.x + ball.radius < 0) {
+          ai.score++;
+          playSound('score');
+          spawnParticles(0, ball.y, '#FF3301', 20);
+          if (ai.score >= WINNING_SCORE) {
+            endGame(false);
+          } else {
+            resetBall(1);
+          }
+        } else if (ball.x - ball.radius > CANVAS_WIDTH) {
+          player.score++;
+          playSound('score');
+          spawnParticles(CANVAS_WIDTH, ball.y, '#00F0FF', 20);
+          if (player.score >= WINNING_SCORE) {
+            endGame(true);
+          } else {
+            resetBall(-1);
+          }
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.life -= p.decay;
+          if (p.life <= 0) particles.splice(i, 1);
+        }
+      }
+
+      function draw() {
+        ctx.fillStyle = '#090A0D';
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+        ctx.lineWidth = 1;
+        const gridSize = 40;
+        for (let x = 0; x < CANVAS_WIDTH; x += gridSize) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, CANVAS_HEIGHT);
+          ctx.stroke();
+        }
+
+        ctx.strokeStyle = 'rgba(255, 51, 1, 0.35)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([8, 8]);
+        ctx.beginPath();
+        ctx.moveTo(CANVAS_WIDTH / 2, 0);
+        ctx.lineTo(CANVAS_WIDTH / 2, CANVAS_HEIGHT);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.font = '700 48px "Space Grotesk", sans-serif';
+        ctx.fillStyle = 'rgba(240, 242, 245, 0.15)';
+        ctx.textAlign = 'center';
+        ctx.fillText(player.score, CANVAS_WIDTH / 4, 75);
+        ctx.fillText(ai.score, (3 * CANVAS_WIDTH) / 4, 75);
+
+        const playerGrad = ctx.createLinearGradient(player.x, player.y, player.x + player.width, player.y + player.height);
+        playerGrad.addColorStop(0, '#FFFFFF');
+        playerGrad.addColorStop(1, '#FF3301');
+
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = 'rgba(255, 51, 1, 0.6)';
+        ctx.fillStyle = playerGrad;
+        roundRect(ctx, player.x, player.y, player.width, player.height, 6);
+
+        const aiGrad = ctx.createLinearGradient(ai.x, ai.y, ai.x + ai.width, ai.y + ai.height);
+        aiGrad.addColorStop(0, '#FF5522');
+        aiGrad.addColorStop(1, '#7A1800');
+
+        ctx.shadowColor = 'rgba(255, 85, 34, 0.6)';
+        ctx.fillStyle = aiGrad;
+        roundRect(ctx, ai.x, ai.y, ai.width, ai.height, 6);
+
+        ball.trail.forEach((t, i) => {
+          const alpha = (i + 1) / ball.trail.length * 0.4;
+          const r = ball.radius * ((i + 1) / ball.trail.length);
+          ctx.beginPath();
+          ctx.arc(t.x, t.y, r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 51, 1, ${alpha})`;
+          ctx.fill();
+        });
+
+        ctx.shadowBlur = 18;
+        ctx.shadowColor = '#FF3301';
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = p.life;
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1.0;
+      }
+
+      function roundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function gameLoop() {
+        update();
+        draw();
+        animId = requestAnimationFrame(gameLoop);
+      }
+
+      function startGame() {
+        resetGame();
+        isPlaying = true;
+        isPaused = false;
+        overlay.classList.add('hidden');
+        startBgMusic();
+      }
+
+      function endGame(playerWon) {
+        isPlaying = false;
+        if (playerWon) {
+          playSound('win');
+          overlayTitle.textContent = 'VICTORY!';
+          overlaySubtitle.textContent = `You dominated the 7ORVIX AI (${player.score} - ${ai.score})`;
+        } else {
+          overlayTitle.textContent = 'GAME OVER';
+          overlaySubtitle.textContent = `7ORVIX AI won (${ai.score} - ${player.score}). Try again!`;
+        }
+        startBtn.textContent = 'PLAY AGAIN';
+        overlay.classList.remove('hidden');
+      }
+
+      function openModal() {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        startBgMusic();
+        if (!animId) {
+          gameLoop();
+        }
+      }
+
+      function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        isPlaying = false;
+        stopBgMusic();
+        overlay.classList.remove('hidden');
+        overlayTitle.textContent = 'CYBER PONG';
+        overlaySubtitle.textContent = 'First player to 7 points wins. Move mouse or use W/S keys.';
+        startBtn.textContent = 'START GAME';
+      }
+
+      if (playBtn) playBtn.addEventListener('click', openModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (startBtn) startBtn.addEventListener('click', startGame);
+
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
       }
 
     })();
