@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7ORVIX — Coming Soon</title>
+  <meta name="description" content="7ORVIX Digital Product Agency. Coming soon.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 54 46'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23FF9A5C'/><stop offset='50%' stop-color='%23FF3301'/><stop offset='100%' stop-color='%237A1800'/></linearGradient></defs><path fill-rule='evenodd' clip-rule='evenodd' d='M53.632 10.368C53.632 12.7573 52.864 14.8907 51.328 16.768L27.264 45.632C27.2213 45.6747 27.136 45.7173 27.008 45.76C26.88 45.8453 26.7947 45.888 26.752 45.888H13.76C13.4187 45.888 13.184 45.7813 13.056 45.568C12.9707 45.3547 13.0347 45.12 13.248 44.864L42.048 10.432H0.64C0.213333 10.432 0 10.2187 0 9.792V0.896C0 0.469331 0.213333 0.255997 0.64 0.255997H43.52C44.928 0.255997 46.2507 0.53333 47.488 1.088C48.7253 1.6 49.792 2.304 50.688 3.2C51.584 4.096 52.288 5.16267 52.8 6.4C53.3547 7.63733 53.632 8.96 53.632 10.368Z' fill='url(%23g)'/></svg>">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================
+       7ORVIX OFFICIAL DESIGN SYSTEM & THEMING
+       ========================================== */
+    :root {
+      --canvas: #080909;
+      --surface: #111214;
+      --brand: #FF3301;
+      --brand-hover: #FF5522;
+      --brand-glow: rgba(255, 51, 1, 0.35);
+      --ink: #F0F2F5;
+      --ink-muted: #B8BEC8;
+      --ink-subtle: #6E7585;
+      --hairline: rgba(255, 255, 255, 0.08);
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--canvas);
+      color: var(--ink);
+      font-family: var(--font-body);
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Fullscreen Viewport Container */
+    .viewport {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3rem 4rem;
+      background: radial-gradient(circle at 50% 45%, #14161f 0%, var(--canvas) 70%);
+      overflow: hidden;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .viewport:active {
+      cursor: grabbing;
+    }
+
+    /* Ambient Glow Behind Stage */
+    .bg-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 65vw;
+      height: 65vw;
+      max-width: 800px;
+      max-height: 800px;
+      background: radial-gradient(circle, var(--brand-glow) 0%, rgba(255, 51, 1, 0.03) 45%, transparent 70%);
+      pointer-events: none;
+      filter: blur(85px);
+      opacity: 0.65;
+      border-radius: 50%;
+    }
+
+    /* Fullscreen SVG Overlay for Ambient Particles */
+    .full-screen-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 5;
+      overflow: visible;
+    }
+
+    /* Header & Navigation Area */
+    .header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+      pointer-events: auto;
+    }
+
+    .brand-link {
+      display: inline-block;
+      text-decoration: none;
+      outline: none;
+    }
+
+    .nav-svg-logo {
+      width: 148px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 2px 10px rgba(255, 51, 1, 0.2));
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.25s ease;
+    }
+
+    .brand-link:hover .nav-svg-logo {
+      transform: scale(1.04);
+      filter: drop-shadow(0 4px 18px rgba(255, 51, 1, 0.5));
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.45rem 1.15rem;
+      background: rgba(17, 18, 20, 0.75);
+      border: 1px solid var(--hairline);
+      border-radius: 100px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--brand);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--brand);
+      animation: pulse-ring 2.2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-ring {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.6); opacity: 0.4; }
+    }
+
+    .status-text {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--ink-muted);
+    }
+
+    /* CENTERPIECE: MOVABLE 7ORVIX LOGO STAGE */
+    .logo-stage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    /* Dynamic Movable 7ORVIX Logo SVG */
+    .floating-logo-svg {
+      width: 90%;
+      max-width: 940px;
+      height: auto;
+      overflow: visible;
+      filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 35px rgba(255, 51, 1, 0.28));
+      transform-origin: center center;
+      will-change: transform;
+      pointer-events: auto;
+    }
+
+    .logo-path {
+      transform-origin: center;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Footer */
+    .footer {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-subtle);
+      text-transform: uppercase;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* Static state for Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      .bg-glow, .status-dot, .floating-logo-svg {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .viewport {
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="viewport" id="viewport">
+    
+    <!-- Ambient Radial Glow -->
+    <div class="bg-glow" id="bg-glow"></div>
+
+    <!-- Fullscreen SVG Overlay for Ambient Particles -->
+    <svg class="full-screen-svg" id="full-svg" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="brand-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FF9A5C" />
+          <stop offset="50%" stop-color="#FF3301" />
+          <stop offset="100%" stop-color="#7A1800" />
+        </linearGradient>
+
+        <!-- Silky Liquid Fluid Refraction Filter -->
+        <filter id="water-refraction" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.006 0.012" numOctaves="2" result="noise" id="fe-turb" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" id="fe-disp" />
+        </filter>
+      </defs>
+
+      <!-- Ambient Drifting Particles Layer -->
+      <g id="particles-group"></g>
+    </svg>
+
+    <!-- Header / Navigation Area -->
+    <header class="header">
+      <a href="#" class="brand-link" aria-label="7ORVIX Homepage">
+        <svg class="nav-svg-logo" viewBox="0 0 372 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- 7 -->
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M53.632 10.368C53.632 12.7573 52.864 14.8907 51.328 16.768L27.264 45.632C27.2213 45.6747 27.136 45.7173 27.008 45.76C26.88 45.8453 26.7947 45.888 26.752 45.888H13.76C13.4187 45.888 13.184 45.7813 13.056 45.568C12.9707 45.3547 13.0347 45.12 13.248 44.864L42.048 10.432H0.64C0.213333 10.432 0 10.2187 0 9.792V0.896C0 0.469331 0.213333 0.255997 0.64 0.255997H43.52C44.928 0.255997 46.2507 0.53333 47.488 1.088C48.7253 1.6 49.792 2.304 50.688 3.2C51.584 4.096 52.288 5.16267 52.8 6.4C53.3547 7.63733 53.632 8.96 53.632 10.368Z" fill="url(#brand-grad)"/>
+          <!-- O -->
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M126.683 22.848C126.683 26.0907 126.064 29.12 124.827 31.936C123.589 34.7093 121.904 37.12 119.771 39.168C117.637 41.216 115.141 42.816 112.283 43.968C109.467 45.12 106.459 45.696 103.258 45.696H80.9865C77.7865 45.696 74.7572 45.12 71.8985 43.968C69.0825 42.816 66.6078 41.216 64.4745 39.168C62.3412 37.12 60.6558 34.7093 59.4185 31.936C58.1812 29.12 57.5625 26.0907 57.5625 22.848C57.5625 19.5627 58.1812 16.5333 59.4185 13.76C60.6558 10.9867 62.3198 8.576 64.4105 6.528C66.5438 4.48 69.0398 2.88 71.8985 1.728C74.7572 0.575999 77.7865 0 80.9865 0H103.258C106.459 0 109.488 0.575999 112.347 1.728C115.205 2.88 117.68 4.48 119.771 6.528C121.904 8.576 123.589 10.9867 124.827 13.76C126.064 16.5333 126.683 19.5627 126.683 22.848ZM80.9865 36.16C79.2798 36.16 77.6798 35.8187 76.1865 35.136C74.6932 34.4533 73.3918 33.536 72.2825 32.384C71.1732 31.1893 70.2985 29.7813 69.6585 28.16C69.0185 26.5387 68.6985 24.768 68.6985 22.848C68.6985 20.928 69.0185 19.1573 69.6585 17.536C70.2985 15.872 71.1732 14.464 72.2825 13.312C73.3918 12.1173 74.6932 11.1787 76.1865 10.496C77.6798 9.81333 79.2798 9.472 80.9865 9.472H103.258C104.965 9.472 106.565 9.81333 108.059 10.496C109.552 11.1787 110.853 12.1173 111.963 13.312C113.072 14.464 113.947 15.872 114.587 17.536C115.227 19.1573 115.547 20.928 115.547 22.848C115.547 24.768 115.227 26.5387 114.587 28.16C113.947 29.7813 113.072 31.1893 111.963 32.384C110.853 33.536 109.552 34.4533 108.059 35.136C106.565 35.8187 104.965 36.16 103.258 36.16H80.9865Z" fill="#F0F2F5"/>
+          <!-- R -->
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M192.836 17.664C192.836 19.6267 192.537 21.504 191.94 23.296C191.385 25.0453 190.575 26.6453 189.508 28.096C188.441 29.504 187.14 30.7413 185.604 31.808C184.111 32.8747 182.447 33.6853 180.612 34.24L192.58 44.736C192.836 44.992 192.921 45.248 192.836 45.504C192.751 45.76 192.516 45.888 192.132 45.888H176.964L176.644 45.76H176.58L166.596 36.992C165.231 35.7547 163.652 35.136 161.86 35.136H141.7V45.312C141.7 45.7387 141.487 45.952 141.06 45.952H131.14C130.713 45.952 130.5 45.7387 130.5 45.312V35.584C130.5 34.0907 130.777 32.704 131.332 31.424C131.887 30.144 132.633 29.0347 133.572 28.096C134.511 27.1573 135.62 26.4107 136.9 25.856C138.223 25.3013 139.609 25.024 141.06 25.024H174.02C176.196 25.024 177.924 24.3413 179.204 22.976C180.527 21.6107 181.188 19.8613 181.188 17.728C181.188 15.552 180.527 13.7813 179.204 12.416C177.924 11.008 176.196 10.304 174.02 10.304H132.036C131.609 10.304 131.396 10.0907 131.396 9.664V0.831997C131.396 0.405331 131.609 0.191998 132.036 0.191998H174.02C176.58 0.191998 178.991 0.597331 181.252 1.408C183.556 2.21866 185.561 3.37066 187.268 4.864C188.975 6.35733 190.319 8.192 191.3 10.368C192.324 12.544 192.836 14.976 192.836 17.664Z" fill="#F0F2F5"/>
+          <!-- V -->
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M256.171 0.255997C256.854 0.255997 257.046 0.554663 256.747 1.152L239.723 39.296C238.827 41.3013 237.44 42.9227 235.563 44.16C233.686 45.3547 231.659 45.952 229.483 45.952H220.203C218.027 45.952 216 45.3547 214.123 44.16C212.246 42.9227 210.859 41.3013 209.963 39.296L192.939 1.152C192.64 0.554663 192.832 0.255997 193.515 0.255997H203.243C203.328 0.255997 203.435 0.298664 203.563 0.383999C203.691 0.469331 203.776 0.554665 203.819 0.639999L218.987 34.624C219.158 34.9653 219.414 35.2427 219.755 35.456C220.096 35.6693 220.459 35.776 220.843 35.776H228.843C229.782 35.776 230.4 35.392 230.699 34.624L245.867 0.639999C245.91 0.554665 245.995 0.469331 246.123 0.383999C246.251 0.298664 246.358 0.255997 246.443 0.255997H256.171Z" fill="#F0F2F5"/>
+          <!-- I -->
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M287.377 0.255997C287.804 0.255997 288.017 0.469331 288.017 0.896V9.792C288.017 10.2187 287.804 10.432 287.377 10.432H279.953V35.776H287.377C287.804 35.776 288.017 35.9893 288.017 36.416V45.312C288.017 45.7387 287.804 45.952 287.377 45.952H261.265C260.838 45.952 260.625 45.7387 260.625 45.312V36.416C260.625 35.9893 260.838 35.776 261.265 35.776H268.753V10.432H261.265C260.838 10.432 260.625 10.2187 260.625 9.792V0.896C260.625 0.469331 260.838 0.255997 261.265 0.255997H287.377Z" fill="#F0F2F5"/>
+          <!-- X -->
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M371.171 44.8C371.427 45.056 371.512 45.312 371.427 45.568C371.342 45.824 371.107 45.952 370.723 45.952H355.619L355.299 45.824H355.235L337.187 30.016C336.206 29.1627 335.246 28.6507 334.307 28.48C333.368 28.2667 332.238 28.16 330.915 28.16C330.062 28.16 329.208 28.3307 328.355 28.672C327.502 28.9707 326.755 29.4187 326.115 30.016L308.067 45.824H308.003L307.683 45.952H292.515C292.131 45.952 291.896 45.824 291.811 45.568C291.726 45.312 291.811 45.056 292.067 44.8L317.475 22.592L293.283 1.408C293.027 1.152 292.942 0.895999 293.027 0.639999C293.112 0.383998 293.347 0.255997 293.731 0.255997H307.235L307.555 0.383999H307.619L325.667 16.192C326.222 16.704 326.755 17.088 327.267 17.344C327.779 17.6 328.312 17.7707 328.867 17.856C329.166 17.9413 329.443 17.984 329.699 17.984C329.998 17.984 330.318 18.0053 330.659 18.048H332.771C333.624 18.048 334.478 17.8987 335.331 17.6C336.184 17.2587 336.931 16.7893 337.571 16.192L355.619 0.383999H355.683L356.003 0.255997H369.571C369.955 0.255997 370.19 0.383998 370.275 0.639999C370.36 0.895999 370.275 1.152 370.019 1.408L345.763 22.592C349.987 26.3893 354.211 30.1227 358.435 33.792C362.659 37.4187 366.904 41.088 371.171 44.8Z" fill="#F0F2F5"/>
+        </svg>
+      </a>
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        <span class="status-text">COMING SOON</span>
+      </div>
+    </header>
+
+    <!-- CENTERPIECE: MOVABLE 7ORVIX LOGO STAGE -->
+    <div class="logo-stage">
+      <svg class="floating-logo-svg" id="floating-logo" viewBox="0 0 372 46" xmlns="http://www.w3.org/2000/svg">
+        <g id="logo-group" filter="url(#water-refraction)">
+          <!-- Glyph '7' -->
+          <path class="logo-path" fill-rule="evenodd" clip-rule="evenodd" d="M53.632 10.368C53.632 12.7573 52.864 14.8907 51.328 16.768L27.264 45.632C27.2213 45.6747 27.136 45.7173 27.008 45.76C26.88 45.8453 26.7947 45.888 26.752 45.888H13.76C13.4187 45.888 13.184 45.7813 13.056 45.568C12.9707 45.3547 13.0347 45.12 13.248 44.864L42.048 10.432H0.64C0.213333 10.432 0 10.2187 0 9.792V0.896C0 0.469331 0.213333 0.255997 0.64 0.255997H43.52C44.928 0.255997 46.2507 0.53333 47.488 1.088C48.7253 1.6 49.792 2.304 50.688 3.2C51.584 4.096 52.288 5.16267 52.8 6.4C53.3547 7.63733 53.632 8.96 53.632 10.368Z" fill="url(#brand-grad)"/>
+          
+          <!-- Glyph 'O' -->
+          <path class="logo-path" fill-rule="evenodd" clip-rule="evenodd" d="M126.683 22.848C126.683 26.0907 126.064 29.12 124.827 31.936C123.589 34.7093 121.904 37.12 119.771 39.168C117.637 41.216 115.141 42.816 112.283 43.968C109.467 45.12 106.459 45.696 103.258 45.696H80.9865C77.7865 45.696 74.7572 45.12 71.8985 43.968C69.0825 42.816 66.6078 41.216 64.4745 39.168C62.3412 37.12 60.6558 34.7093 59.4185 31.936C58.1812 29.12 57.5625 26.0907 57.5625 22.848C57.5625 19.5627 58.1812 16.5333 59.4185 13.76C60.6558 10.9867 62.3198 8.576 64.4105 6.528C66.5438 4.48 69.0398 2.88 71.8985 1.728C74.7572 0.575999 77.7865 0 80.9865 0H103.258C106.459 0 109.488 0.575999 112.347 1.728C115.205 2.88 117.68 4.48 119.771 6.528C121.904 8.576 123.589 10.9867 124.827 13.76C126.064 16.5333 126.683 19.5627 126.683 22.848ZM80.9865 36.16C79.2798 36.16 77.6798 35.8187 76.1865 35.136C74.6932 34.4533 73.3918 33.536 72.2825 32.384C71.1732 31.1893 70.2985 29.7813 69.6585 28.16C69.0185 26.5387 68.6985 24.768 68.6985 22.848C68.6985 20.928 69.0185 19.1573 69.6585 17.536C70.2985 15.872 71.1732 14.464 72.2825 13.312C73.3918 12.1173 74.6932 11.1787 76.1865 10.496C77.6798 9.81333 79.2798 9.472 80.9865 9.472H103.258C104.965 9.472 106.565 9.81333 108.059 10.496C109.552 11.1787 110.853 12.1173 111.963 13.312C113.072 14.464 113.947 15.872 114.587 17.536C115.227 19.1573 115.547 20.928 115.547 22.848C115.547 24.768 115.227 26.5387 114.587 28.16C113.947 29.7813 113.072 31.1893 111.963 32.384C110.853 33.536 109.552 34.4533 108.059 35.136C106.565 35.8187 104.965 36.16 103.258 36.16H80.9865Z" fill="#F0F2F5"/>
+          
+          <!-- Glyph 'R' -->
+          <path class="logo-path" fill-rule="evenodd" clip-rule="evenodd" d="M192.836 17.664C192.836 19.6267 192.537 21.504 191.94 23.296C191.385 25.0453 190.575 26.6453 189.508 28.096C188.441 29.504 187.14 30.7413 185.604 31.808C184.111 32.8747 182.447 33.6853 180.612 34.24L192.58 44.736C192.836 44.992 192.921 45.248 192.836 45.504C192.751 45.76 192.516 45.888 192.132 45.888H176.964L176.644 45.76H176.58L166.596 36.992C165.231 35.7547 163.652 35.136 161.86 35.136H141.7V45.312C141.7 45.7387 141.487 45.952 141.06 45.952H131.14C130.713 45.952 130.5 45.7387 130.5 45.312V35.584C130.5 34.0907 130.777 32.704 131.332 31.424C131.887 30.144 132.633 29.0347 133.572 28.096C134.511 27.1573 135.62 26.4107 136.9 25.856C138.223 25.3013 139.609 25.024 141.06 25.024H174.02C176.196 25.024 177.924 24.3413 179.204 22.976C180.527 21.6107 181.188 19.8613 181.188 17.728C181.188 15.552 180.527 13.7813 179.204 12.416C177.924 11.008 176.196 10.304 174.02 10.304H132.036C131.609 10.304 131.396 10.0907 131.396 9.664V0.831997C131.396 0.405331 131.609 0.191998 132.036 0.191998H174.02C176.58 0.191998 178.991 0.597331 181.252 1.408C183.556 2.21866 185.561 3.37066 187.268 4.864C188.975 6.35733 190.319 8.192 191.3 10.368C192.324 12.544 192.836 14.976 192.836 17.664Z" fill="#F0F2F5"/>
+          
+          <!-- Glyph 'V' -->
+          <path class="logo-path" fill-rule="evenodd" clip-rule="evenodd" d="M256.171 0.255997C256.854 0.255997 257.046 0.554663 256.747 1.152L239.723 39.296C238.827 41.3013 237.44 42.9227 235.563 44.16C233.686 45.3547 231.659 45.952 229.483 45.952H220.203C218.027 45.952 216 45.3547 214.123 44.16C212.246 42.9227 210.859 41.3013 209.963 39.296L192.939 1.152C192.64 0.554663 192.832 0.255997 193.515 0.255997H203.243C203.328 0.255997 203.435 0.298664 203.563 0.383999C203.691 0.469331 203.776 0.554665 203.819 0.639999L218.987 34.624C219.158 34.9653 219.414 35.2427 219.755 35.456C220.096 35.6693 220.459 35.776 220.843 35.776H228.843C229.782 35.776 230.4 35.392 230.699 34.624L245.867 0.639999C245.91 0.554665 245.995 0.469331 246.123 0.383999C246.251 0.298664 246.358 0.255997 246.443 0.255997H256.171Z" fill="#F0F2F5"/>
+          
+          <!-- Glyph 'I' -->
+          <path class="logo-path" fill-rule="evenodd" clip-rule="evenodd" d="M287.377 0.255997C287.804 0.255997 288.017 0.469331 288.017 0.896V9.792C288.017 10.2187 287.804 10.432 287.377 10.432H279.953V35.776H287.377C287.804 35.776 288.017 35.9893 288.017 36.416V45.312C288.017 45.7387 287.804 45.952 287.377 45.952H261.265C260.838 45.952 260.625 45.7387 260.625 45.312V36.416C260.625 35.9893 260.838 35.776 261.265 35.776H268.753V10.432H261.265C260.838 10.432 260.625 10.2187 260.625 9.792V0.896C260.625 0.469331 260.838 0.255997 261.265 0.255997H287.377Z" fill="#F0F2F5"/>
+          
+          <!-- Glyph 'X' -->
+          <path class="logo-path" fill-rule="evenodd" clip-rule="evenodd" d="M371.171 44.8C371.427 45.056 371.512 45.312 371.427 45.568C371.342 45.824 371.107 45.952 370.723 45.952H355.619L355.299 45.824H355.235L337.187 30.016C336.206 29.1627 335.246 28.6507 334.307 28.48C333.368 28.2667 332.238 28.16 330.915 28.16C330.062 28.16 329.208 28.3307 328.355 28.672C327.502 28.9707 326.755 29.4187 326.115 30.016L308.067 45.824H308.003L307.683 45.952H292.515C292.131 45.952 291.896 45.824 291.811 45.568C291.726 45.312 291.811 45.056 292.067 44.8L317.475 22.592L293.283 1.408C293.027 1.152 292.942 0.895999 293.027 0.639999C293.112 0.383998 293.347 0.255997 293.731 0.255997H307.235L307.555 0.383999H307.619L325.667 16.192C326.222 16.704 326.755 17.088 327.267 17.344C327.779 17.6 328.312 17.7707 328.867 17.856C329.166 17.9413 329.443 17.984 329.699 17.984C329.998 17.984 330.318 18.0053 330.659 18.048H332.771C333.624 18.048 334.478 17.8987 335.331 17.6C336.184 17.2587 336.931 16.7893 337.571 16.192L355.619 0.383999H355.683L356.003 0.255997H369.571C369.955 0.255997 370.19 0.383998 370.275 0.639999C370.36 0.895999 370.275 1.152 370.019 1.408L345.763 22.592C349.987 26.3893 354.211 30.1227 358.435 33.792C362.659 37.4187 366.904 41.088 371.171 44.8Z" fill="#F0F2F5"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>&copy; 2026 7ORVIX LABS &bull; ALL RIGHTS RESERVED</span>
+    </footer>
+
+  </main>
+
+  <!-- ==========================================
+       VANILLA JS REALISTIC FLUID PHYSICS ENGINE
+       ========================================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // DOM Elements
+      const viewport = document.getElementById('viewport');
+      const floatingLogo = document.getElementById('floating-logo');
+      const fullSvg = document.getElementById('full-svg');
+      const particlesGroup = document.getElementById('particles-group');
+      const feDisp = document.getElementById('fe-disp');
+      const feTurb = document.getElementById('fe-turb');
+      const bgGlow = document.getElementById('bg-glow');
+
+      // Setup Fullscreen SVG ViewBox
+      function syncSvgDimensions() {
+        fullSvg.setAttribute('viewBox', `0 0 ${window.innerWidth} ${window.innerHeight}`);
+      }
+      syncSvgDimensions();
+      window.addEventListener('resize', syncSvgDimensions);
+
+      // Object Dynamic Center State
+      let centerX = window.innerWidth / 2;
+      let centerY = window.innerHeight * 0.46;
+
+      window.addEventListener('resize', () => {
+        centerX = window.innerWidth / 2;
+        centerY = window.innerHeight * 0.46;
+      });
+
+      const bodyState = {
+        x: centerX,
+        y: centerY,
+        vx: 0,
+        vy: 0,
+        angle: 0,
+        vAngle: 0,
+        isDragging: false,
+        dragOffsetX: 0,
+        dragOffsetY: 0
+      };
+
+      // Ambient Drifting Particles Array
+      const particles = [];
+      const NUM_PARTICLES = 20;
+
+      for (let i = 0; i < NUM_PARTICLES; i++) {
+        const p = {
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          radius: 1.2 + Math.random() * 2.2,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: -0.15 - Math.random() * 0.3,
+          baseOpacity: 0.12 + Math.random() * 0.35,
+          phase: Math.random() * Math.PI * 2,
+          element: null
+        };
+
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("r", p.radius.toFixed(1));
+        circle.setAttribute("fill", "rgba(255, 255, 255, 0.35)");
+        circle.setAttribute("filter", "blur(0.5px)");
+        particlesGroup.appendChild(circle);
+        p.element = circle;
+
+        particles.push(p);
+      }
+
+      // Pointer Event Handlers
+      viewport.addEventListener('pointerdown', (e) => {
+        bodyState.isDragging = true;
+        bodyState.dragOffsetX = e.clientX - bodyState.x;
+        bodyState.dragOffsetY = e.clientY - bodyState.y;
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (bodyState.isDragging) {
+          const targetX = e.clientX - bodyState.dragOffsetX;
+          const targetY = e.clientY - bodyState.dragOffsetY;
+
+          bodyState.vx = (targetX - bodyState.x) * 0.25;
+          bodyState.vy = (targetY - bodyState.y) * 0.25;
+
+          bodyState.x = targetX;
+          bodyState.y = targetY;
+        } else {
+          // Subtle cursor proximity push
+          const dx = e.clientX - bodyState.x;
+          const dy = e.clientY - bodyState.y;
+          const dist = Math.hypot(dx, dy);
+
+          if (dist < 180 && dist > 1) {
+            const push = (180 - dist) / 180;
+            bodyState.vx -= (dx / dist) * push * 0.4;
+            bodyState.vy -= (dy / dist) * push * 0.4;
+          }
+        }
+
+        // Ambient radial background glow movement
+        if (bgGlow) {
+          const glowX = (e.clientX - window.innerWidth / 2) * 0.04;
+          const glowY = (e.clientY - window.innerHeight / 2) * 0.04;
+          bgGlow.style.transform = `translate(calc(-50% + ${glowX}px), calc(-50% + ${glowY}px))`;
+        }
+      });
+
+      window.addEventListener('pointerup', () => {
+        if (bodyState.isDragging) {
+          bodyState.isDragging = false;
+        }
+      });
+
+      // Realistic Physics Engine Loop
+      let time = 0;
+
+      function updatePhysics() {
+        time += 0.016; // Stable 60fps time step
+
+        // 1. Organic Water Bobbing Motion (Gentle Floating Sine Waves)
+        const floatX = Math.sin(time * 0.7) * 10 + Math.cos(time * 1.2) * 4;
+        const floatY = Math.sin(time * 0.9) * 12 + Math.sin(time * 0.45) * 4;
+
+        const targetCenterX = centerX + floatX;
+        const targetCenterY = centerY + floatY;
+
+        if (!bodyState.isDragging) {
+          // Soft Restoring Spring force toward floating center point (realistic, heavy fluid)
+          const K_CENTER = 0.015;
+          bodyState.vx += (targetCenterX - bodyState.x) * K_CENTER;
+          bodyState.vy += (targetCenterY - bodyState.y) * K_CENTER;
+        }
+
+        // 2. 4-SIDE ELASTIC EDGE LIMIT SPRINGS (Smooth rubber-band cushion)
+        const PAD_X = 220; // Horizontal boundary
+        const PAD_Y = 110; // Vertical boundary
+        const K_EDGE = 0.06; // Soft non-squishy spring strength
+
+        const screenW = window.innerWidth;
+        const screenH = window.innerHeight;
+
+        // Left Boundary Spring
+        if (bodyState.x < PAD_X) {
+          const overlap = PAD_X - bodyState.x;
+          bodyState.vx += Math.pow(overlap, 1.1) * K_EDGE;
+        }
+        // Right Boundary Spring
+        if (bodyState.x > screenW - PAD_X) {
+          const overlap = bodyState.x - (screenW - PAD_X);
+          bodyState.vx -= Math.pow(overlap, 1.1) * K_EDGE;
+        }
+        // Top Boundary Spring
+        if (bodyState.y < PAD_Y) {
+          const overlap = PAD_Y - bodyState.y;
+          bodyState.vy += Math.pow(overlap, 1.1) * K_EDGE;
+        }
+        // Bottom Boundary Spring
+        if (bodyState.y > screenH - PAD_Y) {
+          const overlap = bodyState.y - (screenH - PAD_Y);
+          bodyState.vy -= Math.pow(overlap, 1.1) * K_EDGE;
+        }
+
+        // 3. APPLY HEAVY FLUID DRAG & INTEGRATE POSITION
+        const HEAVY_FLUID_DRAG = 0.945;
+        bodyState.vx *= HEAVY_FLUID_DRAG;
+        bodyState.vy *= HEAVY_FLUID_DRAG;
+
+        if (!bodyState.isDragging) {
+          bodyState.x += bodyState.vx;
+          bodyState.y += bodyState.vy;
+        }
+
+        // Roll Torque Alignment (Subtle fluid tilt)
+        const targetRoll = (bodyState.vx * 0.008);
+        bodyState.vAngle = (bodyState.vAngle + (targetRoll - bodyState.angle) * 0.04) * 0.88;
+        bodyState.angle += bodyState.vAngle;
+
+        // 4. RENDER LOGO TRANSFORM (Solid, realistic 1:1 scale with fluid translation & tilt)
+        const offsetX = bodyState.x - centerX;
+        const offsetY = bodyState.y - centerY;
+        const angleDeg = (bodyState.angle * 180 / Math.PI).toFixed(2);
+
+        floatingLogo.style.transform = `
+          translate3d(${offsetX.toFixed(2)}px, ${offsetY.toFixed(2)}px, 0px)
+          rotate(${angleDeg}deg)
+        `;
+
+        // Modulate subtle liquid turbulence refraction
+        const speed = Math.hypot(bodyState.vx, bodyState.vy);
+        if (feDisp) {
+          const dispScale = (6 + Math.min(speed * 0.8, 8)).toFixed(1);
+          feDisp.setAttribute("scale", dispScale);
+        }
+        if (feTurb) {
+          const freqX = (0.006 + Math.sin(time * 0.3) * 0.0015).toFixed(4);
+          const freqY = (0.012 + Math.cos(time * 0.5) * 0.002).toFixed(4);
+          feTurb.setAttribute("baseFrequency", `${freqX} ${freqY}`);
+        }
+
+        // 5. RENDER AMBIENT BUBBLES
+        particles.forEach(p => {
+          p.x += p.vx + Math.sin(time + p.phase) * 0.2;
+          p.y += p.vy;
+
+          if (p.y < -20) {
+            p.y = window.innerHeight + 20;
+            p.x = Math.random() * window.innerWidth;
+          }
+
+          const opacity = (p.baseOpacity + Math.sin(time * 2.5 + p.phase) * 0.12).toFixed(2);
+          p.element.setAttribute("cx", p.x.toFixed(1));
+          p.element.setAttribute("cy", p.y.toFixed(1));
+          p.element.setAttribute("opacity", Math.max(0.04, opacity));
+        });
+
+        if (!prefersReducedMotion) {
+          requestAnimationFrame(updatePhysics);
+        }
+      }
+
+      // Start Physics Loop
+      if (prefersReducedMotion) {
+        floatingLogo.style.transform = `translate3d(0px, 0px, 0px)`;
+      } else {
+        requestAnimationFrame(updatePhysics);
+      }
+
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+/* ==========================================
+   7ORVIX LANDING PAGE & FLUID DESIGN SYSTEM
+   ========================================== */
+:root {
+  --canvas: #080909;
+  --surface: #111214;
+  --brand: #FF3301;
+  --brand-hover: #FF5522;
+  --brand-glow: rgba(255, 51, 1, 0.35);
+  --ink: #F0F2F5;
+  --ink-muted: #B8BEC8;
+  --ink-subtle: #6E7585;
+  --hairline: rgba(255, 255, 255, 0.08);
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fullscreen Viewport Container */
+.viewport {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 4rem;
+  background: radial-gradient(circle at 50% 45%, #14161f 0%, var(--canvas) 70%);
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+}
+
+.viewport:active {
+  cursor: grabbing;
+}
+
+/* Ambient Glow Behind Stage */
+.bg-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 65vw;
+  height: 65vw;
+  max-width: 800px;
+  max-height: 800px;
+  background: radial-gradient(circle, var(--brand-glow) 0%, rgba(255, 51, 1, 0.03) 45%, transparent 70%);
+  pointer-events: none;
+  filter: blur(85px);
+  opacity: 0.65;
+  border-radius: 50%;
+}
+
+/* Fullscreen SVG Overlay for Ambient Particles */
+.full-screen-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 5;
+  overflow: visible;
+}
+
+/* Header & Navigation Area */
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.brand-link {
+  display: inline-block;
+  text-decoration: none;
+  outline: none;
+}
+
+.nav-svg-logo {
+  width: 148px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 2px 10px rgba(255, 51, 1, 0.2));
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.25s ease;
+}
+
+.brand-link:hover .nav-svg-logo {
+  transform: scale(1.04);
+  filter: drop-shadow(0 4px 18px rgba(255, 51, 1, 0.5));
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 1.15rem;
+  background: rgba(17, 18, 20, 0.75);
+  border: 1px solid var(--hairline);
+  border-radius: 100px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--brand);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--brand);
+  animation: pulse-ring 2.2s infinite ease-in-out;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.4; }
+}
+
+.status-text {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--ink-muted);
+}
+
+/* CENTERPIECE: MOVABLE 7ORVIX LOGO STAGE */
+.logo-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* Dynamic Movable 7ORVIX Logo SVG */
+.floating-logo-svg {
+  width: 90%;
+  max-width: 940px;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 35px rgba(255, 51, 1, 0.28));
+  transform-origin: center center;
+  will-change: transform;
+  pointer-events: auto;
+}
+
+/* Footer */
+.footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-subtle);
+  text-transform: uppercase;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-glow, .status-dot, .floating-logo-svg {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .viewport {
+    padding: 2rem 1.5rem;
+  }
+}
