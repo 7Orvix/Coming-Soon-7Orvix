@@ -215,9 +215,150 @@
       }
     }
 
-    @media (max-width: 768px) {
+    /* ==========================================
+       RESPONSIVE DESIGN SYSTEM (9:16 & MOBILE)
+       ========================================== */
+    @media (max-width: 850px), (max-aspect-ratio: 1/1) {
       .viewport {
-        padding: 2rem 1.5rem;
+        padding: 2.2rem 1.25rem 2rem 1.25rem;
+      }
+
+      .header {
+        justify-content: center;
+      }
+
+      .nav-svg-logo {
+        width: 124px;
+      }
+
+      /* Clean borderless floating placement for Play & Coming Soon */
+      .header-actions {
+        position: fixed;
+        bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px));
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto;
+        max-width: 92vw;
+        justify-content: center;
+        align-items: center;
+        gap: 0.85rem;
+        padding: 0;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        box-shadow: none;
+        z-index: 30;
+      }
+
+      .pong-btn {
+        padding: 0.55rem 1.15rem;
+        font-size: 0.7rem;
+      }
+
+      .status-pill {
+        padding: 0.55rem 1.15rem;
+      }
+
+      .status-text {
+        font-size: 0.7rem;
+      }
+
+      .floating-logo-svg {
+        width: 88vw;
+        max-width: 320px;
+      }
+
+      .footer {
+        position: fixed;
+        bottom: calc(1.2rem + env(safe-area-inset-bottom, 0px));
+        left: 0;
+        width: 100%;
+        font-size: 0.62rem;
+        z-index: 10;
+      }
+
+      /* PONG MODAL TALL MOBILE HEIGHT EXPERIENCE */
+      .pong-modal-backdrop {
+        padding: 0.5rem;
+        padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+      }
+
+      .pong-modal-card {
+        height: calc(100dvh - 1rem);
+        height: calc(100vh - 1rem);
+        max-height: 100dvh;
+        border-radius: 16px;
+      }
+
+      .pong-modal-header {
+        padding: 0.75rem 1rem;
+        flex-shrink: 0;
+      }
+
+      .pong-header-logo {
+        height: 16px;
+      }
+
+      .pong-title-tag {
+        font-size: 0.8rem;
+      }
+
+      .pong-game-container {
+        flex: 1;
+        height: 100%;
+        max-height: none;
+        aspect-ratio: unset;
+        min-height: 0;
+        touch-action: none;
+      }
+
+      #pong-canvas {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        touch-action: none;
+      }
+
+      .pong-overlay-content {
+        padding: 1.25rem 1rem;
+        max-width: 100%;
+      }
+
+      .pong-overlay-logo {
+        height: 28px;
+      }
+
+      .pong-overlay-content h2 {
+        font-size: 1.35rem;
+      }
+
+      .pong-overlay-content p {
+        font-size: 0.82rem;
+        margin-bottom: 1.2rem;
+        line-height: 1.45;
+      }
+
+      .pong-primary-btn {
+        padding: 0.65rem 1.8rem;
+        font-size: 0.78rem;
+      }
+
+      .pong-modal-footer {
+        flex-shrink: 0;
+        padding: 0.65rem 1rem;
+        flex-direction: column;
+        gap: 0.4rem;
+        align-items: center;
+        text-align: center;
+      }
+
+      .pong-controls-info {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.4rem;
+        font-size: 0.65rem;
       }
     }
 
@@ -736,9 +877,10 @@
           bodyState.vy += (targetCenterY - bodyState.y) * K_CENTER;
         }
 
-        // 2. 4-SIDE ELASTIC EDGE LIMIT SPRINGS (Smooth rubber-band cushion)
-        const PAD_X = 220; // Horizontal boundary
-        const PAD_Y = 110; // Vertical boundary
+        // 2. 4-SIDE ELASTIC EDGE LIMIT SPRINGS (Responsive rubber-band cushion)
+        const isMobileScreen = window.innerWidth <= 850 || (window.innerHeight / window.innerWidth) >= 1.2;
+        const PAD_X = isMobileScreen ? Math.min(100, window.innerWidth * 0.28) : 220; // Horizontal boundary
+        const PAD_Y = isMobileScreen ? Math.min(140, window.innerHeight * 0.22) : 110; // Vertical boundary
         const K_EDGE = 0.06; // Soft non-squishy spring strength
 
         const screenW = window.innerWidth;
@@ -866,7 +1008,7 @@
               </svg>
             </div>
             <h2 id="pong-overlay-title">CYBER PONG</h2>
-            <p id="pong-overlay-subtitle">First player to 7 points wins. Move mouse or use W/S keys.</p>
+            <p id="pong-overlay-subtitle">First player to 7 points wins. Tilt phone up/down, swipe screen, or move mouse.</p>
             <button id="pong-start-btn" class="pong-primary-btn">START GAME</button>
           </div>
         </div>
@@ -874,8 +1016,8 @@
 
       <div class="pong-modal-footer">
         <div class="pong-controls-info">
-          <span><kbd>W</kbd> / <kbd>S</kbd> or <kbd>▲</kbd> / <kbd>▼</kbd> or Mouse to Move</span>
-          <span><kbd>ESC</kbd> to Exit</span>
+          <span><kbd><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/><path d="m9 9 3-3 3 3"/><path d="m9 15 3 3 3-3"/></svg>TILT</kbd> / <kbd><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v6"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 0 1 2 2v4a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.83L7 15"/></svg>TOUCH</kbd> / <kbd>W</kbd> <kbd>S</kbd> / Mouse</span>
+          <span><kbd>ESC</kbd> Exit</span>
         </div>
         <div class="pong-sound-toggle" id="pong-sound-toggle">
           <span id="sound-status">SOUND: ON</span>
@@ -1049,6 +1191,56 @@
         keys[e.key] = false;
       });
 
+      // MOBILE GYRO & TOUCH CONTROL SYSTEM
+      let gyroEnabled = false;
+      let gyroActive = false;
+      let gyroTargetY = player.y;
+
+      function requestGyroPermission() {
+        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+          DeviceOrientationEvent.requestPermission()
+            .then(permissionState => {
+              if (permissionState === 'granted') {
+                enableGyro();
+              }
+            })
+            .catch(() => {});
+        } else if ('DeviceOrientationEvent' in window) {
+          enableGyro();
+        }
+      }
+
+      function enableGyro() {
+        if (gyroEnabled) return;
+        gyroEnabled = true;
+        window.addEventListener('deviceorientation', handleOrientation, true);
+      }
+
+      function handleOrientation(e) {
+        let beta = e.beta;   // Pitch angle (-180 to 180). Positive = tilt forward/down, Negative = tilt back/up
+        let gamma = e.gamma; // Roll angle (-90 to 90)
+
+        if (beta === null || beta === undefined) return;
+
+        gyroActive = true;
+
+        // Determine orientation (portrait 9:16 vs landscape)
+        const isLandscape = window.innerWidth > window.innerHeight;
+        let tiltAngle = isLandscape ? gamma : beta;
+
+        // Pitch range calibration:
+        // In portrait mode, natural holding pitch is ~35° - 45°.
+        // Tilt top up (beta <= 18°) -> Paddle top (y = 10)
+        // Tilt top down (beta >= 62°) -> Paddle bottom (y = CANVAS_HEIGHT - height - 10)
+        const minTilt = isLandscape ? -25 : 18;
+        const maxTilt = isLandscape ? 25 : 62;
+
+        const clampedTilt = Math.max(minTilt, Math.min(maxTilt, tiltAngle));
+        const norm = (clampedTilt - minTilt) / (maxTilt - minTilt);
+
+        gyroTargetY = norm * (CANVAS_HEIGHT - player.height - 20) + 10;
+      }
+
       canvas.addEventListener('mousemove', (e) => {
         const rect = canvas.getBoundingClientRect();
         const scaleY = CANVAS_HEIGHT / rect.height;
@@ -1056,15 +1248,23 @@
         player.y = Math.max(10, Math.min(CANVAS_HEIGHT - player.height - 10, mouseY - player.height / 2));
       });
 
-      canvas.addEventListener('touchmove', (e) => {
-        if (e.touches.length > 0) {
-          const rect = canvas.getBoundingClientRect();
-          const scaleY = CANVAS_HEIGHT / rect.height;
-          const touchY = (e.touches[0].clientY - rect.top) * scaleY;
-          player.y = Math.max(10, Math.min(CANVAS_HEIGHT - player.height - 10, touchY - player.height / 2));
-        }
-        e.preventDefault();
-      }, { passive: false });
+      function handleTouch(e) {
+        if (!e.touches || e.touches.length === 0) return;
+        const rect = canvas.getBoundingClientRect();
+        const scaleY = CANVAS_HEIGHT / rect.height;
+        const touchY = (e.touches[0].clientY - rect.top) * scaleY;
+        player.y = Math.max(10, Math.min(CANVAS_HEIGHT - player.height - 10, touchY - player.height / 2));
+        if (e.cancelable) e.preventDefault();
+      }
+
+      canvas.addEventListener('touchstart', handleTouch, { passive: false });
+      canvas.addEventListener('touchmove', handleTouch, { passive: false });
+
+      const gameContainer = document.querySelector('.pong-game-container');
+      if (gameContainer) {
+        gameContainer.addEventListener('touchstart', handleTouch, { passive: false });
+        gameContainer.addEventListener('touchmove', handleTouch, { passive: false });
+      }
 
       function update() {
         if (!isPlaying || isPaused) return;
@@ -1075,6 +1275,12 @@
         }
         if (keys['s'] || keys['S'] || keys['ArrowDown']) {
           player.y = Math.min(CANVAS_HEIGHT - player.height - 10, player.y + K_SPEED);
+        }
+
+        // Smooth Mobile Gyroscope / Sensor Lerp
+        if (gyroActive) {
+          player.y += (gyroTargetY - player.y) * 0.18;
+          player.y = Math.max(10, Math.min(CANVAS_HEIGHT - player.height - 10, player.y));
         }
 
         // ADVANCED AI LOGIC: Predictive Trajectory + Dynamic Speed + Deceptive Feints
@@ -1292,6 +1498,7 @@
       }
 
       function startGame() {
+        requestGyroPermission();
         resetGame();
         isPlaying = true;
         isPaused = false;
@@ -1314,6 +1521,7 @@
       }
 
       function openModal() {
+        requestGyroPermission();
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
         startBgMusic();
@@ -1329,7 +1537,7 @@
         stopBgMusic();
         overlay.classList.remove('hidden');
         overlayTitle.textContent = 'CYBER PONG';
-        overlaySubtitle.textContent = 'First player to 7 points wins. Move mouse or use W/S keys.';
+        overlaySubtitle.textContent = 'First player to 7 points wins. Tilt phone up/down, swipe screen, or move mouse.';
         startBtn.textContent = 'START GAME';
       }
 
